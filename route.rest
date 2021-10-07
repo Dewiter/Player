@@ -1,0 +1,28 @@
+GET http://localhost:5000/players/
+
+###
+
+GET http://localhost:5000/players/615f65675c9033a770342e37
+
+###
+
+POST http://localhost:5000/players
+Content-Type: application/json
+
+{
+ "name":"oui",
+ "subscribe":"dewiter"
+}
+
+
+###
+DELETE http://localhost:5000/players/615f65675c9033a770342e37
+
+
+###
+PATCH http://localhost:5000/players/615f76cd70af2fe738b2306b
+Content-Type: application/json
+
+{
+ "name":"syberia"
+}
