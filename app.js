@@ -8,26 +8,25 @@ const app = express();
 //database
 const  mongoose = require('mongoose');
 
-mongoose.connect(process.env.DATABASE_URL);
+const YoutubeRoutes = require('./routes/youtube-routes');
+
+
+//Create instance of db
+mongoose.connect(process.env.DATABASE_URL, {useNewUrlParser: true, useUnifiedTopology: true});
 const db = mongoose.connection;
 
+app.use(express.json());
+app.use('/youtube', YoutubeRoutes)
 
-//db handling
+//db handling error
 db.on('error', (error) => {
  console.error(error);
 });
 
+//db do stuff on connection
 db.once('open', () => {
  console.log('connected to database');
-})
-
-
-app.use(express.json());
-
-const playerRouter = require('./Routes/Players');
-
-app.use('/Players', playerRouter);
-
-app.listen(process.env.PORT, () => {
- console.log(`process started at PORT : ${process.env.PORT}`);
+ app.listen(process.env.PORT, () => {
+  console.log(`process started at PORT : ${process.env.PORT}`);
+ })
 })
