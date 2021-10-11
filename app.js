@@ -1,5 +1,6 @@
 //ENV
 const dotenv = require('dotenv').config();
+const path = require('path');
 
 // express
 const express = require('express');
@@ -11,10 +12,7 @@ const mongoose = require('mongoose');
 //Routes
 const YoutubeRoutes = require('./routes/youtube-routes');
 
-//middleware
-const dl = require('./middleware/youtube-dl');
-
-app.use('/get-video/:url', dl);
+// app.use('/get-video/:url', dl);
 
 //Create instance of db
 mongoose.connect(process.env.DATABASE_URL, {
@@ -32,8 +30,12 @@ db.on('error', (error) => {
 
 //db do stuff on connection
 db.once('open', () => {
-  console.log('connected to database');
+  console.log('connected to database !!');
   app.listen(process.env.PORT, () => {
     console.log(`process started at PORT : ${process.env.PORT}`);
   });
+});
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname + '/test.html'), { test: 'hello' });
 });
