@@ -18,7 +18,7 @@ router.get('/add-content/:url', (req, res) => {
       if (err) {
         console.error(err);
       } else {
-        res.send(`${result.title}\n was send to db`);
+        res.send({ value: `${result.title}\n was send to db` });
       }
     });
   });

@@ -12,7 +12,9 @@ const mongoose = require('mongoose');
 //Routes
 const YoutubeRoutes = require('./routes/youtube-routes');
 
-// app.use('/get-video/:url', dl);
+const cors = require('cors');
+
+app.use(cors());
 
 //Create instance of db
 mongoose.connect(process.env.DATABASE_URL, {
