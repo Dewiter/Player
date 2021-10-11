@@ -1,32 +1,39 @@
 //ENV
-const dotenv = require('dotenv').config()
+const dotenv = require('dotenv').config();
 
 // express
 const express = require('express');
 const app = express();
 
 //database
-const  mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
+//Routes
 const YoutubeRoutes = require('./routes/youtube-routes');
 
+//middleware
+const dl = require('./middleware/youtube-dl');
+
+app.use('/get-video/:url', dl);
 
 //Create instance of db
-mongoose.connect(process.env.DATABASE_URL, {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect(process.env.DATABASE_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 const db = mongoose.connection;
 
-app.use(express.json());
-app.use('/youtube', YoutubeRoutes)
+app.use('/youtube', YoutubeRoutes);
 
 //db handling error
 db.on('error', (error) => {
- console.error(error);
+  console.error(error);
 });
 
 //db do stuff on connection
 db.once('open', () => {
- console.log('connected to database');
- app.listen(process.env.PORT, () => {
-  console.log(`process started at PORT : ${process.env.PORT}`);
- })
-})
+  console.log('connected to database');
+  app.listen(process.env.PORT, () => {
+    console.log(`process started at PORT : ${process.env.PORT}`);
+  });
+});
