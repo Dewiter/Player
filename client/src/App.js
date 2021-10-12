@@ -1,4 +1,5 @@
 import Player from './components/player/Player';
+import Modal from './components/modal/Modal';
 
 function App() {
   return (

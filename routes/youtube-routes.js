@@ -2,28 +2,43 @@ const express = require('express');
 const router = express.Router();
 const YoutubeModel = require('../models/youtube');
 const YoutubeDl = require('youtube-dl-exec');
-const fs = require('fs');
-const lamejs = require('lamejs');
-const { Blob } = require('node-blob');
 
 //write data
-router.get('/add-content/:url', (req, res) => {
-  YoutubeDl(req.params.url, { dumpSingleJson: true }).then((result) => {
-    const data = new YoutubeModel({
-      name: result.title,
-      data: result.formats[0].url,
-    });
-
-    data.save((err) => {
+router.get('/query/:url', (req, res) => {
+  //queries youtube api and downloads song
+  YoutubeDl(req.params.url, { dumpSingleJson: true }).then(async (query) => {
+    YoutubeModel.find({ name: query.title }, (err, result) => {
       if (err) {
-        console.error(err);
+        console.log(err);
       } else {
-        res.send({ value: `${result.title}\n was send to db` });
+        // - Checks if song is already stored in db -
+        // if not -->  create an entry
+        if (result.length === 0) {
+          const data = new YoutubeModel({
+            name: query.title,
+            data: query.formats[0].url,
+          });
+          data.save((err) => {
+            if (err) {
+              console.error(err);
+            } else {
+              res.send({ name: data.name, audio: data.data });
+            }
+          });
+          // if so --> retrieve already existing song
+        } else {
+          res.send({ name: result[0].name, audio: result[0].data });
+        }
       }
-    });
+    })
+      .clone()
+      .catch(function (err) {
+        console.log(err);
+      });
   });
 });
 
+//Extra routes ment for testing purposes
 //get data
 router.get('/get-content', (req, res) => {
   const query = YoutubeModel.find({});
@@ -72,6 +87,17 @@ router.get('/update/:id', async (req, res) => {
       console.log(err);
     } else {
       res.send('- Deleted Item -');
+    }
+  });
+});
+
+//clear
+router.get('/clear', async (req, res) => {
+  const query = YoutubeModel.deleteMany({}, (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send('- success ! -');
     }
   });
 });

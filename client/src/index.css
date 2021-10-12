@@ -49,11 +49,13 @@ form .input-search {
     inset 3px 3px 5px rgba(94, 104, 121, 0.288);
   appearance: none;
   border: none;
-  margin-right: 10px;
+  margin-right: 5px;
+  padding-left: 10%;
 }
 
-form .input-search::placeholder {
-  padding-left: 10%;
+form {
+  display: flex;
+  flex-direction: row;
 }
 
 .btn-control {
@@ -79,8 +81,52 @@ form .input-search::placeholder {
   width: 40px;
 }
 
+.btn-submit {
+  border: none;
+  appearance: none;
+  -webkit-appearance: none;
+  box-shadow: -3px -3px 7px #ffffff73, 3px 3px 5px rgba(94, 104, 121, 0.288);
+  height: 40px;
+  background: #dde1e7;
+  border-radius: 25px 25px 25px 25px;
+  width: 40px;
+}
+
 input:focus,
 textarea:focus,
 select:focus {
   outline: none;
+}
+
+.modal {
+  height: 3vw;
+  width: 15vw;
+  position: absolute;
+  top: 2vw;
+  right: 2vw;
+  animation: fadeInOut 3s;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 10;
+  border-radius: 5px;
+}
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.success {
+  background: rgba(50, 178, 98, 0.5);
+}
+
+.fail {
+  background: rgba(237, 40, 57, 0.5);
 }
