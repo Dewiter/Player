@@ -5,9 +5,82 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #dde1e7;
+  height: 100%;
+}
+.big {
+  display: flex;
+  justify-content: center;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.container {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin-top: 15vw;
+  color: white;
+  width: 40vw;
+  height: 10vw;
+  box-shadow: -3px -3px 7px #ffffff73, 3px 3px 5px rgba(94, 104, 121, 0.288);
+  border-radius: 10px;
+  outline: none;
+  padding: 10px;
+}
+
+.player {
+  margin: auto;
+}
+
+form {
+  margin: 10px;
+}
+
+form .input-search {
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  background-color: #dde1e7;
+  height: 40px;
+  width: 400px;
+  border-radius: 25px;
+  box-shadow: inset -3px -3px 7px #ffffff73,
+    inset 3px 3px 5px rgba(94, 104, 121, 0.288);
+  appearance: none;
+  border: none;
+  margin-right: 10px;
+}
+
+form .input-search::placeholder {
+  padding-left: 10%;
+}
+
+.btn-control {
+  border: none;
+  appearance: none;
+  -webkit-appearance: none;
+  box-shadow: -3px -3px 7px #ffffff73, 3px 3px 5px rgba(94, 104, 121, 0.288);
+  height: 40px;
+  background: #dde1e7;
+  border-radius: 25px 25px 25px 25px;
+  width: 40px;
+}
+
+.btn-search {
+  border: none;
+  appearance: none;
+  -webkit-appearance: none;
+  box-shadow: inset -3px -3px 7px #ffffff73,
+    inset 3px 3px 5px rgba(94, 104, 121, 0.288);
+  height: 40px;
+  background: #dde1e7;
+  border-radius: 25px 25px 25px 25px;
+  width: 40px;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
 }

@@ -2,9 +2,9 @@
   "name": "player",
   "version": "1.0.0",
   "description": "plays music from different streaming services",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon server.js"
   },
   "author": "Dewiyer",
   "license": "ISC",
