@@ -73,8 +73,7 @@ form {
   border: none;
   appearance: none;
   -webkit-appearance: none;
-  box-shadow: inset -3px -3px 7px #ffffff73,
-    inset 3px 3px 5px rgba(94, 104, 121, 0.288);
+  box-shadow: -3px -3px 7px #ffffff73, 3px 3px 5px rgba(94, 104, 121, 0.288);
   height: 40px;
   background: #dde1e7;
   border-radius: 25px 25px 25px 25px;
@@ -85,7 +84,8 @@ form {
   border: none;
   appearance: none;
   -webkit-appearance: none;
-  box-shadow: -3px -3px 7px #ffffff73, 3px 3px 5px rgba(94, 104, 121, 0.288);
+  box-shadow: inset -3px -3px 7px #ffffff73,
+    inset 3px 3px 5px rgba(94, 104, 121, 0.288);
   height: 40px;
   background: #dde1e7;
   border-radius: 25px 25px 25px 25px;

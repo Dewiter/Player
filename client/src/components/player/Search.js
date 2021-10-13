@@ -8,8 +8,11 @@ const Search = ({ state, handler }) => {
     e.preventDefault();
 
     const btn = e.target.childNodes[1];
+    const input = e.target.childNodes[0];
     btn.classList.remove('btn-search');
     btn.classList.add('btn-submit');
+    btn.disabled = true;
+    input.disabled = true;
 
     //fetch data
     if (link) {
@@ -22,7 +25,6 @@ const Search = ({ state, handler }) => {
         })
         .then((res) => {
           setData((prev) => {
-            console.log(`data : ${prev?.name}\n res: ${res.name}`);
             return res;
           });
         })
@@ -30,21 +32,25 @@ const Search = ({ state, handler }) => {
 
       btn.classList.remove('btn-submit');
       btn.classList.add('btn-search');
+      btn.disabled = false;
+      input.disabled = true;
     } else {
       handler({ type: 'EMPTY_INPUT' });
     }
   };
 
   useEffect(() => {
-    if (data?.status === '200') {
-      handler({
-        type: 'ADD_SONG',
-        payload: data,
-      });
-    } else {
-      handler({
-        type: 'BAD_LINK',
-      });
+    if (link) {
+      if (data?.status === '200') {
+        handler({
+          type: 'ADD_SONG',
+          payload: data,
+        });
+      } else {
+        handler({
+          type: 'BAD_LINK',
+        });
+      }
     }
   }, [data]);
 
