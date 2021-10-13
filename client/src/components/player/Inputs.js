@@ -1,16 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const Inputs = () => {
+const Inputs = ({ queue }) => {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const sound = new Audio();
+
+  const play = () => {
+    // setIsPlaying(!isPlaying);
+    // if (queue) {
+    //   if (isPlaying) {
+    //     sound.play();
+    //   } else {
+    //     console.log('stop');
+    //   }
+    // }
+    console.log(queue);
+  };
+
   return (
     <div>
       <button className='btn-control'>
-        <i class='fas fa-backward'></i>
+        <i className='fas fa-backward'></i>
+      </button>
+      <button className='btn-control' onClick={() => play(isPlaying)}>
+        <i className='fas fa-play'></i>
       </button>
       <button className='btn-control'>
-        <i class='fas fa-play'></i>
-      </button>
-      <button className='btn-control'>
-        <i class='fas fa-forward'></i>
+        <i className='fas fa-forward'></i>
       </button>
     </div>
   );

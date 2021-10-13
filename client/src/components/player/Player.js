@@ -1,10 +1,8 @@
-import React, { useReducer, useContext } from 'react';
+import React, { useReducer } from 'react';
 import Search from './Search';
 import Input from './Inputs';
 import { controller } from '../../controller';
 import Modal from '../modal/Modal';
-
-const PlayerContext = React.createContext();
 
 const Player = () => {
   const [state, dispatch] = useReducer(controller, {
@@ -21,7 +19,7 @@ const Player = () => {
   return (
     <div className='player'>
       <Search handler={dispatch} state={state} />
-      <Input />
+      <Input queue={state.queue} />
       {state.modalState && (
         <Modal
           modalContent={state.modalContent}

@@ -17,10 +17,13 @@ const Search = ({ state, handler }) => {
       await fetch(url, {
         headers: { 'Access-Control-Allow-Origin': '*' },
       })
-        .then((data) => {
-          return data.json();
+        .then((response) => {
+          return response.json();
         })
-        .then((res) => setData(res))
+        .then((res) => {
+          setData(res);
+          console.log(`data : ${data.name}\n res: ${res.name}`);
+        })
         .catch((err) => console.error(err));
 
       handler({
@@ -47,7 +50,7 @@ const Search = ({ state, handler }) => {
           onChange={(e) => setLink(e.target.value)}
         />
         <button className='btn-search'>
-          <i class='fas fa-search'></i>
+          <i className='fas fa-search'></i>
         </button>
       </form>
     </>
