@@ -26,10 +26,16 @@ const Search = ({ state, handler }) => {
         })
         .catch((err) => console.error(err));
 
-      handler({
-        type: 'ADD_SONG',
-        payload: data,
-      });
+      if (data.status === '200') {
+        handler({
+          type: 'ADD_SONG',
+          payload: data,
+        });
+      } else {
+        handler({
+          type: 'BAD_LINK',
+        });
+      }
       btn.classList.remove('btn-submit');
       btn.classList.add('btn-search');
     } else {

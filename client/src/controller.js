@@ -18,6 +18,13 @@ export const controller = (state, action) => {
         modalContent: 'Please enter a link a in the input',
         modalType: 'fail',
       };
+    case 'BAD_LINK':
+      return {
+        ...state,
+        modalState: true,
+        modalContent: 'Could not find video',
+        modalType: 'fail',
+      };
     default:
       throw new Error('no matching states');
   }

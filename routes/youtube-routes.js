@@ -6,36 +6,44 @@ const YoutubeDl = require('youtube-dl-exec');
 //write data
 router.get('/query/:url', (req, res) => {
   //queries youtube api and downloads song
-  YoutubeDl(req.params.url, { dumpSingleJson: true }).then(async (query) => {
-    YoutubeModel.find({ name: query.title }, (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        // - Checks if song is already stored in db -
-        // if not -->  create an entry
-        if (result.length === 0) {
-          const data = new YoutubeModel({
-            name: query.title,
-            data: query.formats[0].url,
-          });
-          data.save((err) => {
-            if (err) {
-              console.error(err);
-            } else {
-              res.send({ name: data.name, audio: data.data });
-            }
-          });
-          // if so --> retrieve already existing song
+  YoutubeDl(req.params.url, { dumpSingleJson: true })
+    .then(async (query) => {
+      YoutubeModel.find({ name: query.title }, (err, result) => {
+        if (err) {
+          console.log(err);
         } else {
-          res.send({ name: result[0].name, audio: result[0].data });
+          // - Checks if song is already stored in db -
+          // if not -->  create an entry
+          if (result.length === 0) {
+            const data = new YoutubeModel({
+              name: query.title,
+              data: query.formats[0].url,
+            });
+            data.save((err) => {
+              if (err) {
+                console.error(err);
+              } else {
+                res.send({ name: data.name, audio: data.data, status: '200' });
+              }
+            });
+            // if so --> retrieve already existing song
+          } else {
+            res.send({
+              name: result[0].name,
+              audio: result[0].data,
+              status: '200',
+            });
+          }
         }
-      }
+      })
+        .clone()
+        .catch(function (err) {
+          console.log(err);
+        });
     })
-      .clone()
-      .catch(function (err) {
-        console.log(err);
-      });
-  });
+    .catch((err) => {
+      res.status(404).send({ status: '404' });
+    });
 });
 
 //Extra routes ment for testing purposes
