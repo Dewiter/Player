@@ -22,7 +22,7 @@ export const controller = (state, action) => {
       return {
         ...state,
         modalState: true,
-        modalContent: 'Could not find video',
+        modalContent: 'Could not find song',
         modalType: 'fail',
       };
     default:
