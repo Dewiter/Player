@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Button from './Inputs/Button';
 
 const Search = ({ state, handler }) => {
   const [link, setLink] = useState('');
@@ -9,8 +10,8 @@ const Search = ({ state, handler }) => {
 
     const btn = e.target.childNodes[1];
     const input = e.target.childNodes[0];
-    btn.classList.remove('btn-search');
-    btn.classList.add('btn-submit');
+    btn.classList.remove('btn-not-pressed');
+    btn.classList.add('btn-pressed');
     btn.disabled = true;
     input.disabled = true;
 
@@ -30,10 +31,10 @@ const Search = ({ state, handler }) => {
         })
         .catch((err) => console.error(err));
 
-      btn.classList.remove('btn-submit');
-      btn.classList.add('btn-search');
+      btn.classList.remove('btn-pressed');
+      btn.classList.add('btn-not-pressed');
       btn.disabled = false;
-      input.disabled = true;
+      input.disabled = false;
     } else {
       handler({ type: 'EMPTY_INPUT' });
     }
@@ -66,9 +67,7 @@ const Search = ({ state, handler }) => {
           value={link}
           onChange={(e) => setLink(e.target.value)}
         />
-        <button className='btn-search'>
-          <i className='fas fa-search'></i>
-        </button>
+        <Button content='fas fa-search' />
       </form>
     </>
   );

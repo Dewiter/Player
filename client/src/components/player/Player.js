@@ -1,11 +1,11 @@
 import React, { useReducer } from 'react';
 import Search from './Search';
-import Input from './Inputs';
-import { controller } from '../../controller';
+import Input from './Inputs/Inputs';
+import { queryController } from '../../controller/queryController';
 import Modal from '../modal/Modal';
 
 const Player = () => {
-  const [state, dispatch] = useReducer(controller, {
+  const [state, dispatch] = useReducer(queryController, {
     queue: [],
     modalState: false,
     modalContent: '',

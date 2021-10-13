@@ -1,4 +1,4 @@
-export const controller = (state, action) => {
+export const queryController = (state, action) => {
   switch (action.type) {
     case 'ADD_SONG':
       const queue = [...state.queue, action.payload];
