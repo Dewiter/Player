@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Search = ({ state, handler }) => {
   const [link, setLink] = useState('');
@@ -21,27 +21,32 @@ const Search = ({ state, handler }) => {
           return response.json();
         })
         .then((res) => {
-          setData(res);
-          console.log(`data : ${data.name}\n res: ${res.name}`);
+          setData((prev) => {
+            console.log(`data : ${prev?.name}\n res: ${res.name}`);
+            return res;
+          });
         })
         .catch((err) => console.error(err));
 
-      if (data.status === '200') {
-        handler({
-          type: 'ADD_SONG',
-          payload: data,
-        });
-      } else {
-        handler({
-          type: 'BAD_LINK',
-        });
-      }
       btn.classList.remove('btn-submit');
       btn.classList.add('btn-search');
     } else {
       handler({ type: 'EMPTY_INPUT' });
     }
   };
+
+  useEffect(() => {
+    if (data?.status === '200') {
+      handler({
+        type: 'ADD_SONG',
+        payload: data,
+      });
+    } else {
+      handler({
+        type: 'BAD_LINK',
+      });
+    }
+  }, [data]);
 
   return (
     <>
