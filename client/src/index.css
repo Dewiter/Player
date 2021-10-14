@@ -5,35 +5,53 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #dde1e7;
+  background-color: #e2e6f0;
   height: 100%;
 }
-.big {
-  display: flex;
-  justify-content: center;
+.app-container {
+  height: 40vw;
+  border-radius: 0 0 25px 25px;
+  box-shadow: -3px -3px 7px #ffffff73, 3px 3px 5px rgba(94, 104, 121, 0.288);
+  background-color: #eceff8;
+  display: grid;
+  grid-column-gap: 5%;
+  padding: 5% 2% 0 2%;
+}
+
+.container-in {
+  box-shadow: inset -3px -3px 7px #ffffff73,
+    inset 3px 3px 5px rgba(94, 104, 121, 0.288);
+}
+
+.container-out {
+  box-shadow: -3px -3px 7px #ffffff73, 3px 3px 5px rgba(94, 104, 121, 0.288);
 }
 
 .container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   text-align: center;
-  margin-top: 15vw;
-  color: white;
-  width: 40vw;
-  height: 10vw;
-  box-shadow: inset -3px -3px 7px #ffffff73,
-    inset 3px 3px 5px rgba(94, 104, 121, 0.288);
+  justify-content: center;
+
   border-radius: 10px;
-  outline: none;
   padding: 10px;
 }
 
 .player {
-  margin: auto;
+  height: 10vw;
 }
 
-form {
-  margin: 10px;
+input:-webkit-autofill {
+  background-color: #eceff8;
+}
+
+input:-internal-autofill-selected {
+  background-color: #eceff8;
+}
+
+.query .btn {
+  width: 5%;
+  margin-left: 2%;
 }
 
 form .input-search {
@@ -42,28 +60,22 @@ form .input-search {
   -moz-appearance: none;
   -ms-appearance: none;
   -o-appearance: none;
-  background-color: #dde1e7;
+  background-color: #eceff8;
   height: 40px;
-  width: 400px;
   border-radius: 25px;
-  box-shadow: inset -3px -3px 7px #ffffff73,
-    inset 3px 3px 5px rgba(94, 104, 121, 0.288);
+  box-shadow: -3px -3px 7px #ffffff73, 3px 3px 5px rgba(94, 104, 121, 0.288);
   appearance: none;
+  padding-left: 2.5%;
   border: none;
-  margin-right: 5px;
-  padding-left: 10%;
-}
-
-form {
-  display: flex;
-  flex-direction: row;
+  width: 90%;
+  margin-bottom: 5%;
 }
 
 .btn {
   border: none;
   appearance: none;
   height: 40px;
-  background: #dde1e7;
+  background: #eceff8;
   border-radius: 25px 25px 25px 25px;
   width: 40px;
   -webkit-appearance: none;
@@ -81,6 +93,10 @@ form {
 .btn:active {
   box-shadow: inset -3px -3px 7px #ffffff73,
     inset 3px 3px 5px rgba(94, 104, 121, 0.288);
+}
+
+.btn-media {
+  margin: 10px 20px 20px 20px;
 }
 
 input:focus,
@@ -114,8 +130,25 @@ select:focus {
   }
 }
 
+.media {
+  grid-column: 1;
+  grid-row: 1;
+}
+.playlist {
+  grid-column: 2;
+  grid-row: 1;
+  /* background-color: #e2e6f0; */
+}
+
 .success {
   background: rgba(50, 178, 98, 0.5);
+}
+
+.song {
+  /* background-color: #eceff8; */
+  border-radius: 10px;
+  margin: 3% 2%;
+  box-shadow: -3px -3px 7px #ffffff73, 3px 3px 5px rgba(94, 104, 121, 0.288);
 }
 
 .fail {
