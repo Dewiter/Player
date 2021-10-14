@@ -57,7 +57,7 @@ const Search = ({ state, handler }) => {
 
   return (
     <>
-      <form onSubmit={SendLink}>
+      <form className='query' onSubmit={SendLink}>
         <input
           className='input-search'
           type='text'

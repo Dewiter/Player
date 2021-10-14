@@ -17,8 +17,9 @@ const Player = () => {
   };
 
   return (
-    <div className='player'>
-      <Search handler={dispatch} state={state} />
+    <div className='container container-out player'>
+      {/* <Search handler={dispatch} state={state} /> */}
+      <h1>placeholder</h1>
       <Input queue={state.queue} />
       {state.modalState && (
         <Modal

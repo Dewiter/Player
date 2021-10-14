@@ -11,15 +11,6 @@ const Inputs = ({ queue }) => {
   const audio = document.querySelector('#audio');
 
   useEffect(() => {
-    // if (queue.length === 0) {
-    //   playPause.current.disabled = true;
-    //   prev.current.disabled = true;
-    //   next.current.disabled = true;
-    // } else {
-    //   playPause.current.disabled = false;
-    //   prev.current.disabled = false;
-    //   next.current.disabled = false;
-    // }
     if (queue.length === 1) {
       console.log('set to zero');
       setCurrentSong(0);
@@ -31,14 +22,15 @@ const Inputs = ({ queue }) => {
     if (queue.length > 0) {
       if (!isPlaying) {
         //Chnaging style
-        playPause.current.classList.remove('playPause-not-pressed');
-        playPause.current.classList.add('playPause-pressed');
+        playPause.current.classList.remove('btn-not-pressed');
+        playPause.current.classList.add('btn-pressed');
         playPause.current.style.color = '#578cc5';
 
         //audio manipulation
         audio.src = queue[index].audio;
         audio.currentTime = currentTime;
         audio.play();
+        setIsPlaying(true);
       }
     }
   };
@@ -50,8 +42,9 @@ const Inputs = ({ queue }) => {
 
     //Changing style
     playPause.current.style.color = 'black';
-    playPause.current.classList.remove('playPause-pressed');
-    playPause.current.classList.add('playPause-not-pressed');
+    playPause.current.classList.remove('btn-pressed');
+    playPause.current.classList.add('btn-not-pressed');
+    setIsPlaying(false);
   };
 
   const previousSong = (index) => {
@@ -89,11 +82,12 @@ const Inputs = ({ queue }) => {
   };
 
   return (
-    <div>
+    <div className='btn-media-container'>
       <Button
         ref={prev}
         content='fas fa-backward'
         onclick={() => previousSong(currentSong)}
+        customClass='btn-media'
       />
 
       {!isPlaying ? (
@@ -101,18 +95,21 @@ const Inputs = ({ queue }) => {
           content='fas fa-play'
           ref={playPause}
           onclick={() => playSong(currentSong)}
+          customClass='btn-media'
         />
       ) : (
         <Button
           content='fas fa-pause'
           ref={playPause}
           onclick={() => pauseSong()}
+          customClass='btn-media'
         />
       )}
       <Button
         ref={next}
         content='fas fa-forward'
         onclick={() => nextSong(currentSong)}
+        customClass='btn-media'
       />
       <audio id='audio'></audio>
     </div>
