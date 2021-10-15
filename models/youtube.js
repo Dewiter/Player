@@ -13,6 +13,9 @@ const YoutubeSchema = new Schema(
       type: String,
       required: true,
     },
+    source: {
+      type: String,
+    },
   },
   { collection: 'youtube' }
 );

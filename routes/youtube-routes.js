@@ -18,12 +18,19 @@ router.get('/query/:url', (req, res) => {
             const data = new YoutubeModel({
               name: query.title,
               data: query.formats[0].url,
+              source: 'youtube',
             });
             data.save((err) => {
               if (err) {
                 console.error(err);
               } else {
-                res.send({ name: data.name, audio: data.data, status: '200' });
+                console.log(data.id);
+                res.send({
+                  name: data.name,
+                  audio: data.data,
+                  source: data.source,
+                  status: '200',
+                });
               }
             });
             // if so --> retrieve already existing song
@@ -31,6 +38,7 @@ router.get('/query/:url', (req, res) => {
             res.send({
               name: result[0].name,
               audio: result[0].data,
+              source: result[0].source,
               status: '200',
             });
           }

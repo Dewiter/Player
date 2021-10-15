@@ -85,21 +85,21 @@ const Inputs = ({ queue }) => {
     <div className='btn-media-container'>
       <Button
         ref={prev}
-        content='fas fa-backward'
+        content='backward'
         onclick={() => previousSong(currentSong)}
         customClass='btn-media'
       />
 
       {!isPlaying ? (
         <Button
-          content='fas fa-play'
+          content='play'
           ref={playPause}
           onclick={() => playSong(currentSong)}
           customClass='btn-media'
         />
       ) : (
         <Button
-          content='fas fa-pause'
+          content='pause'
           ref={playPause}
           onclick={() => pauseSong()}
           customClass='btn-media'
@@ -107,7 +107,7 @@ const Inputs = ({ queue }) => {
       )}
       <Button
         ref={next}
-        content='fas fa-forward'
+        content='forward'
         onclick={() => nextSong(currentSong)}
         customClass='btn-media'
       />

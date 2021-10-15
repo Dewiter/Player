@@ -1,16 +1,38 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faPlay,
+  faPause,
+  faSearch,
+  faForward,
+  faBackward,
+} from '@fortawesome/free-solid-svg-icons';
 
 const Button = React.forwardRef(({ content, onclick, customClass }, ref) => {
-  const [currentContent, setCurrentContent] = useState('');
-
-  useEffect(() => {
-    setCurrentContent(() => content);
-    ref?.current.classList.add(customClass);
-  }, [, content]);
+  const getContent = (current) => {
+    switch (current) {
+      case 'play':
+        return <FontAwesomeIcon icon={faPlay} />;
+      case 'pause':
+        return <FontAwesomeIcon icon={faPause} />;
+      case 'forward':
+        return <FontAwesomeIcon icon={faForward} />;
+      case 'backward':
+        return <FontAwesomeIcon icon={faBackward} />;
+      case 'search':
+        return <FontAwesomeIcon icon={faSearch} />;
+      default:
+        break;
+    }
+  };
 
   return (
-    <button ref={ref} className='btn btn-not-pressed' onClick={onclick}>
-      <i className={currentContent}></i>
+    <button
+      ref={ref}
+      className={`btn btn-not-pressed ${customClass}`}
+      onClick={onclick}
+    >
+      {getContent(content)}
     </button>
   );
 });

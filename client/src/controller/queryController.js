@@ -3,7 +3,6 @@ export const queryController = (state, action) => {
     case 'ADD_SONG':
       const queue = [...state.queue, action.payload];
       return {
-        ...state,
         queue: queue,
         modalState: true,
         modalContent: 'Song was added',

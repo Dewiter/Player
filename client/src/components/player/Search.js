@@ -67,7 +67,7 @@ const Search = ({ state, handler }) => {
           value={link}
           onChange={(e) => setLink(e.target.value)}
         />
-        <Button content='fas fa-search' />
+        <Button content='search' />
       </form>
     </>
   );

@@ -26,7 +26,7 @@ function App() {
           <Player queue={state.queue} />
         </div>
         <div className='playlist'>
-          <Playlist />
+          <Playlist queue={state.queue} />
         </div>
       </div>
 
