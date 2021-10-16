@@ -21,7 +21,7 @@ function App() {
     currentTime: 0,
     audio: audio,
     isPlaying: false,
-    volume: 0.05,
+    volume: 0,
   });
 
   const closeNotif = () => {
