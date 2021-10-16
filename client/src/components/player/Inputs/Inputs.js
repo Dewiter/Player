@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { playerController } from '../../../controller/playerController';
+import React, { useEffect } from 'react';
 import Button from './Button';
 const Inputs = ({ player, playerHandler }) => {
   const playPause = React.createRef();
