@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from 'react';
+import React, { useReducer } from 'react';
 import Player from './components/player/Player';
 import Search from './components/player/Search';
 import Playlist from './components/player/Playlist';

@@ -73,6 +73,12 @@ export const playerController = (state, action) => {
     }
   };
 
+  const setVolume = () => {
+    console.log(action.payload);
+    state.audio.volume = parseFloat(action.payload);
+    return { ...state };
+  };
+
   const stateMachine = [
     { type: 'INIT', func: init },
     { type: 'UPDATE', func: updateQueue },
@@ -80,6 +86,7 @@ export const playerController = (state, action) => {
     { type: 'PAUSE', func: pause },
     { type: 'NEXT', func: nextSong },
     { type: 'PREV', func: prevSong },
+    { type: 'VOLUME', func: setVolume },
   ];
 
   const stateMachineValue = stateMachine.map((value) => {

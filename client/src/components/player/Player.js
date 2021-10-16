@@ -1,5 +1,6 @@
 import Input from './Inputs/Inputs';
 import Progress from './Inputs/Progress';
+import Volume from './Volume';
 
 const Player = ({ player, playerHandler }) => {
   return (
@@ -7,6 +8,7 @@ const Player = ({ player, playerHandler }) => {
       {player?.currentSong && <h1>{player.currentSong.name}</h1>}
       <Input player={player} playerHandler={playerHandler} />
       <Progress player={player} playerHandler={playerHandler} />
+      <Volume playerHandler={playerHandler} />
     </div>
   );
 };
