@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Button from './Inputs/Button';
+const { v4: uuidv4 } = require('uuid');
 
-const Search = ({ state, handler }) => {
+const Search = ({ notifHandler, player, playerHandler }) => {
   const [link, setLink] = useState('');
   const [data, setData] = useState({});
 
@@ -25,7 +26,7 @@ const Search = ({ state, handler }) => {
           return response.json();
         })
         .then((res) => {
-          setData((prev) => {
+          setData(() => {
             return res;
           });
         })
@@ -36,21 +37,24 @@ const Search = ({ state, handler }) => {
       btn.disabled = false;
       input.disabled = false;
     } else {
-      handler({ type: 'EMPTY_INPUT' });
+      notifHandler({ type: 'EMPTY_INPUT' });
     }
   };
 
   useEffect(() => {
     if (link) {
       if (data?.status === '200') {
-        handler({
-          type: 'ADD_SONG',
-          payload: data,
-        });
+        notifHandler({ type: 'ADD_SONG' });
+        data.key = uuidv4();
+        console.log(data.queue);
+        data.index = player.queue.length;
+        if (player.queue.length === 0) {
+          playerHandler({ type: 'INIT', payload: data });
+        } else {
+          playerHandler({ type: 'UPDATE', payload: data });
+        }
       } else {
-        handler({
-          type: 'BAD_LINK',
-        });
+        notifHandler({ type: 'BAD_LINK' });
       }
     }
   }, [data]);

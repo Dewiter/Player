@@ -8,7 +8,6 @@ const Modal = ({ modalContent, modalType, closeModal }) => {
 
     document.querySelector('.modal').classList.add(modalType);
   }, [modalType]);
-
   return (
     <div className='modal'>
       <p>{modalContent}</p>

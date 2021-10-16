@@ -1,37 +1,28 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import React from 'react';
 import Song from './Song';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 const Playlist = ({ queue }) => {
-  const { v4: uuidv4 } = require('uuid');
-  const [playlist, setPlaylist] = useState([]);
-  const playlistRef = useRef(null);
-
-  useEffect(() => {
-    setPlaylist((prev) => {
-      console.log(prev);
-      console.log(queue);
-      return queue;
+  const getQueue = () => {
+    return queue.map((value) => {
+      return (
+        <CSSTransition timeout={1000} classNames='song'>
+          <Song key={value.key} name={value.name} source={value.source} />
+        </CSSTransition>
+      );
     });
-  }, [queue]);
+  };
 
   return (
-    <div ref={playlistRef} className='container container-in'>
-      <h1>Your Queue</h1>
-      {playlist.length === 0 ? (
-        <p>Queue is empty</p>
-      ) : (
-        <TransitionGroup className='songList'>
-          {playlist.map((value) => {
-            const key = uuidv4();
-            return (
-              <CSSTransition key={key} timeout={3000} classNames='song'>
-                <Song key={key} name={value.name} source={value.source} />
-              </CSSTransition>
-            );
-          })}
-        </TransitionGroup>
-      )}
+    <div className='container container-in'>
+      <h1 className='playlist-title'>Your Queue</h1>
+      <div className='songList'>
+        {queue.length === 0 ? (
+          <p>Queue is empty</p>
+        ) : (
+          <TransitionGroup>{getQueue()}</TransitionGroup>
+        )}
+      </div>
     </div>
   );
 };

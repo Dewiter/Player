@@ -1,10 +1,10 @@
 import Input from './Inputs/Inputs';
 
-const Player = ({ queue }) => {
+const Player = ({ player, playerHandler }) => {
   return (
     <div className='container container-out player'>
-      <h1>placeholder</h1>
-      <Input queue={queue} />
+      {player?.currentSong && <h1>{player.currentSong.name}</h1>}
+      <Input player={player} player={player} playerHandler={playerHandler} />
     </div>
   );
 };

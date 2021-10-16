@@ -1,40 +1,54 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useState } from 'react';
 import Player from './components/player/Player';
 import Search from './components/player/Search';
 import Playlist from './components/player/Playlist';
 import Modal from './components/modal/Modal';
 
-import { queryController } from './controller/queryController';
+import { notifController } from './controller/notifController';
+import { playerController } from './controller/playerController';
 
 function App() {
-  const [state, dispatch] = useReducer(queryController, {
-    queue: [],
-    modalState: false,
-    modalContent: '',
-    modalType: '',
+  const audio = document.querySelector('#audio');
+  const [notif, dispatchNotif] = useReducer(notifController, {
+    notifState: false,
+    notifContent: '',
+    notifType: '',
   });
 
-  const closeModal = () => {
-    dispatch({ type: 'CLOSE_MODAL' });
+  const [player, dispatchPlayer] = useReducer(playerController, {
+    currentSong: {},
+    queue: [],
+    currentTime: 0,
+    audio: audio,
+    isPlaying: false,
+    volume: 0.05,
+  });
+
+  const closeNotif = () => {
+    dispatchNotif({ type: 'CLOSE_MODAL' });
   };
 
   return (
     <>
       <div className='app-container'>
         <div className='media'>
-          <Search handler={dispatch} state={state} />
-          <Player queue={state.queue} />
+          <Search
+            notifHandler={dispatchNotif}
+            player={player}
+            playerHandler={dispatchPlayer}
+          />
+          <Player player={player} playerHandler={dispatchPlayer} />
         </div>
         <div className='playlist'>
-          <Playlist queue={state.queue} />
+          <Playlist queue={player.queue} />
         </div>
       </div>
 
-      {state.modalState && (
+      {notif.notifState && (
         <Modal
-          modalContent={state.modalContent}
-          modalType={state.modalType}
-          closeModal={closeModal}
+          modalContent={notif.notifContent}
+          modalType={notif.notifType}
+          closeModal={closeNotif}
         />
       )}
     </>

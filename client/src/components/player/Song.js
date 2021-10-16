@@ -1,9 +1,10 @@
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faYoutube } from '@fortawesome/free-brands-svg-icons';
 
-const Song = ({ name, source }) => {
+const Song = React.memo(({ name, source }) => {
+  console.log('in');
   const badge = (media) => {
-    console.log('in');
     switch (media) {
       case 'youtube':
         return (
@@ -18,8 +19,8 @@ const Song = ({ name, source }) => {
   };
 
   const exerp = () => {
-    if (name.length >= 30) {
-      return name.slice(0, 30);
+    if (name.length >= 60) {
+      return name.slice(0, 60);
     }
     return name;
   };
@@ -30,6 +31,6 @@ const Song = ({ name, source }) => {
       {badge(source)}
     </div>
   );
-};
+});
 
 export default Song;

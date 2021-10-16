@@ -1,84 +1,29 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useEffect } from 'react';
+import { playerController } from '../../../controller/playerController';
 import Button from './Button';
-
-const Inputs = ({ queue }) => {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [currentSong, setCurrentSong] = useState(null);
+const Inputs = ({ player, playerHandler }) => {
   const playPause = React.createRef();
   const next = React.createRef();
   const prev = React.createRef();
-  const audio = document.querySelector('#audio');
 
-  useEffect(() => {
-    if (queue.length === 1) {
-      console.log('set to zero');
-      setCurrentSong(0);
-    }
-  }, [queue]);
+  const playSong = () => {
+    if (player.queue.length > 0) {
+      //Changing style
+      playPause.current.classList.remove('btn-not-pressed');
+      playPause.current.classList.add('btn-pressed');
+      playPause.current.style.color = '#578cc5';
 
-  const playSong = (index) => {
-    audio.volume = 0.05;
-    if (queue.length > 0) {
-      if (!isPlaying) {
-        //Chnaging style
-        playPause.current.classList.remove('btn-not-pressed');
-        playPause.current.classList.add('btn-pressed');
-        playPause.current.style.color = '#578cc5';
-
-        //audio manipulation
-        audio.src = queue[index].audio;
-        audio.currentTime = currentTime;
-        audio.play();
-        setIsPlaying(true);
-      }
+      playerHandler({ type: 'PLAY' });
     }
   };
 
   const pauseSong = () => {
-    audio.pause();
-    console.log(audio.currentTime);
-    setCurrentTime(audio.currentTime);
+    playerHandler({ type: 'PAUSE' });
 
     //Changing style
     playPause.current.style.color = 'black';
     playPause.current.classList.remove('btn-pressed');
     playPause.current.classList.add('btn-not-pressed');
-    setIsPlaying(false);
-  };
-
-  const previousSong = (index) => {
-    setIsPlaying(false);
-    audio.currentTime = 0;
-    setCurrentSong(index);
-    if (currentTime <= 5 || currentSong === 0) {
-      setCurrentSong(() => {
-        playSong();
-        return 0;
-      });
-    } else {
-      setCurrentSong(() => {
-        playSong();
-        return currentSong - 1;
-      });
-    }
-  };
-
-  const nextSong = (index) => {
-    setIsPlaying(false);
-    audio.currentTime = 0;
-    setCurrentSong(index);
-    if (currentSong + 1 < queue.length) {
-      setCurrentSong(() => {
-        playSong(currentSong + 1);
-        return currentSong + 1;
-      });
-    } else {
-      setCurrentSong(() => {
-        playSong(0);
-        return 0;
-      });
-    }
   };
 
   return (
@@ -86,15 +31,15 @@ const Inputs = ({ queue }) => {
       <Button
         ref={prev}
         content='backward'
-        onclick={() => previousSong(currentSong)}
+        onclick={() => playerHandler({ type: 'PREV' })}
         customClass='btn-media'
       />
 
-      {!isPlaying ? (
+      {!player?.isPlaying ? (
         <Button
           content='play'
           ref={playPause}
-          onclick={() => playSong(currentSong)}
+          onclick={() => playSong()}
           customClass='btn-media'
         />
       ) : (
@@ -108,10 +53,9 @@ const Inputs = ({ queue }) => {
       <Button
         ref={next}
         content='forward'
-        onclick={() => nextSong(currentSong)}
+        onclick={() => playerHandler({ type: 'NEXT' })}
         customClass='btn-media'
       />
-      <audio id='audio'></audio>
     </div>
   );
 };

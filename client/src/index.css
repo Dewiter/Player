@@ -111,7 +111,6 @@ select:focus {
   position: absolute;
   top: 2vw;
   right: 2vw;
-  animation: fadeInOut 3s;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -120,6 +119,7 @@ select:focus {
   color: white;
   text-align: center;
   transition: opacity 1s ease;
+  animation: fadeInOut 3s;
 }
 @keyframes fadeInOut {
   0% {
@@ -141,7 +141,7 @@ select:focus {
 .playlist {
   grid-column: 2;
   grid-row: 1;
-  max-width: 100%;
+  max-width: 90%;
 }
 .playlist .container {
   height: 575px;
@@ -163,6 +163,20 @@ select:focus {
   display: none;
 }
 
+.playlist-title {
+  transition: opacity 1s;
+  animation: slideUp 1s;
+}
+
+@keyframes slideUp {
+  0% {
+    opacity: 0%;
+  }
+  100% {
+    opacity: 100%;
+  }
+}
+
 .song {
   border-radius: 10px;
   margin: 3% 2%;
@@ -172,27 +186,19 @@ select:focus {
   justify-content: space-between;
   padding: 0% 3%;
   height: 70px;
+  transition: transform 1s, opacity 1s;
+  animation: slideIn 1s;
 }
 
-.song-enter {
-  transition: opacity 3s, transform 3s;
-  transform: translateY(-70px);
-  opacity: 0%;
-}
-.song-enter-active {
-  transition: opacity 3s, transform 3s;
-  transform: translateY(0);
-  opacity: 100%;
-}
-
-.song-exit {
-  transition: opacity 3s, transform 3s;
-  opacity: 100%;
-}
-
-.song-exit-active {
-  transition: opacity 3s, transform 3s;
-  opacity: 0%;
+@keyframes slideIn {
+  0% {
+    transform: translateY(-70px);
+    opacity: 0%;
+  }
+  100% {
+    transform: translateY(0px);
+    opacity: 100%;
+  }
 }
 
 .source {
