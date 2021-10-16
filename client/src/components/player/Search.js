@@ -36,6 +36,7 @@ const Search = ({ notifHandler, player, playerHandler }) => {
       btn.classList.add('btn-not-pressed');
       btn.disabled = false;
       input.disabled = false;
+      setLink('');
     } else {
       notifHandler({ type: 'EMPTY_INPUT' });
     }

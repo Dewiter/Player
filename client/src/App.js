@@ -3,6 +3,7 @@ import Player from './components/player/Player';
 import Search from './components/player/Search';
 import Playlist from './components/player/Playlist';
 import Modal from './components/modal/Modal';
+import Logo from './Logo';
 
 import { notifController } from './controller/notifController';
 import { playerController } from './controller/playerController';
@@ -29,29 +30,38 @@ function App() {
   };
 
   return (
-    <>
-      <div className='app-container'>
-        <div className='media'>
+    <div className='app'>
+      <aside className='nav'>
+        <Logo />
+      </aside>
+      <div>
+        <div className='search-container'>
           <Search
             notifHandler={dispatchNotif}
             player={player}
             playerHandler={dispatchPlayer}
           />
-          <Player player={player} playerHandler={dispatchPlayer} />
         </div>
-        <div className='playlist'>
-          <Playlist queue={player.queue} />
+        {player?.currentSong && (
+          <h1 className='currentSong'>{player.currentSong.name}</h1>
+        )}
+        <div className='app-wrapper'>
+          <div className='app-container'>
+            <Player player={player} playerHandler={dispatchPlayer} />
+          </div>
+          <div className='playlist'>
+            <Playlist queue={player.queue} />
+          </div>
         </div>
+        {notif.notifState && (
+          <Modal
+            modalContent={notif.notifContent}
+            modalType={notif.notifType}
+            closeModal={closeNotif}
+          />
+        )}
       </div>
-
-      {notif.notifState && (
-        <Modal
-          modalContent={notif.notifContent}
-          modalType={notif.notifType}
-          closeModal={closeNotif}
-        />
-      )}
-    </>
+    </div>
   );
 }
 
