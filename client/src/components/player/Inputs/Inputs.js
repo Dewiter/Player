@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Button from './Button';
 const Inputs = ({ player, playerHandler }) => {
   const playPause = React.createRef();
@@ -10,8 +10,8 @@ const Inputs = ({ player, playerHandler }) => {
       //Changing style
       playPause.current.classList.remove('btn-not-pressed');
       playPause.current.classList.add('btn-pressed');
-      playPause.current.style.color = '#578cc5';
 
+      console.log('in play');
       playerHandler({ type: 'PLAY' });
     }
   };
@@ -19,8 +19,6 @@ const Inputs = ({ player, playerHandler }) => {
   const pauseSong = () => {
     playerHandler({ type: 'PAUSE' });
 
-    //Changing style
-    playPause.current.style.color = 'black';
     playPause.current.classList.remove('btn-pressed');
     playPause.current.classList.add('btn-not-pressed');
   };
@@ -31,7 +29,7 @@ const Inputs = ({ player, playerHandler }) => {
         ref={prev}
         content='backward'
         onclick={() => playerHandler({ type: 'PREV' })}
-        customClass='btn-media'
+        customClass='btn-media, btn-prev-next'
       />
 
       {!player?.isPlaying ? (
@@ -39,21 +37,21 @@ const Inputs = ({ player, playerHandler }) => {
           content='play'
           ref={playPause}
           onclick={() => playSong()}
-          customClass='btn-media'
+          customClass='btn-media, btn-play'
         />
       ) : (
         <Button
           content='pause'
           ref={playPause}
           onclick={() => pauseSong()}
-          customClass='btn-media'
+          customClass='btn-media, btn-play'
         />
       )}
       <Button
         ref={next}
         content='forward'
         onclick={() => playerHandler({ type: 'NEXT' })}
-        customClass='btn-media'
+        customClass='btn-media, btn-prev-next'
       />
     </div>
   );

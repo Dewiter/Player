@@ -10,8 +10,10 @@ const Progress = ({ player, playerHandler }) => {
     }
   });
   return (
-    <div className='container-out progress-container'>
-      <div ref={progressRef} className='progress'></div>
+    <div className='progress-container'>
+      <div className='progress-bg'>
+        <div ref={progressRef} className='progress'></div>
+      </div>
     </div>
   );
 };

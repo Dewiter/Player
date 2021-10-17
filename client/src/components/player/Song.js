@@ -2,14 +2,13 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faYoutube } from '@fortawesome/free-brands-svg-icons';
 
-const Song = React.memo(({ name, source }) => {
-  console.log('in');
+const Song = React.memo(({ current, song, playerHandler }) => {
   const badge = (media) => {
     switch (media) {
       case 'youtube':
         return (
           <div className={'source youtube'}>
-            <FontAwesomeIcon icon={faYoutube} size='xs' />
+            <FontAwesomeIcon icon={faYoutube} size='lg' />
           </div>
         );
 
@@ -19,18 +18,33 @@ const Song = React.memo(({ name, source }) => {
   };
 
   const exerp = () => {
-    if (name.length >= 60) {
-      return name.slice(0, 60);
+    if (song.name.length >= 60) {
+      return song.name.slice(0, 60);
     }
-    return name;
+    return song.name;
   };
 
-  return (
-    <div className='song'>
-      <p>{exerp()}</p>
-      {badge(source)}
-    </div>
-  );
+  if (current.index === song.index) {
+    return (
+      <button
+        className='song song-active'
+        onClick={() => playerHandler({ type: 'CHANGE', payload: song })}
+      >
+        <p>{exerp()}</p>
+        {badge(song.source)}
+      </button>
+    );
+  } else {
+    return (
+      <button
+        className='song'
+        onClick={() => playerHandler({ type: 'CHANGE', payload: song })}
+      >
+        <p>{exerp()}</p>
+        {badge(song.source)}
+      </button>
+    );
+  }
 });
 
 export default Song;

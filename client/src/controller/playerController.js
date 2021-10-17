@@ -73,8 +73,17 @@ export const playerController = (state, action) => {
     }
   };
 
+  const changeSong = () => {
+    state.audio.pause();
+    state.audio.currentTime = 0;
+    state.audio.play();
+    return {
+      ...state,
+      currentSong: action.payload,
+    };
+  };
+
   const setVolume = () => {
-    console.log(action.payload);
     state.audio.volume = parseFloat(action.payload);
     return { ...state };
   };
@@ -87,6 +96,7 @@ export const playerController = (state, action) => {
     { type: 'NEXT', func: nextSong },
     { type: 'PREV', func: prevSong },
     { type: 'VOLUME', func: setVolume },
+    { type: 'CHANGE', func: changeSong },
   ];
 
   const stateMachineValue = stateMachine.map((value) => {

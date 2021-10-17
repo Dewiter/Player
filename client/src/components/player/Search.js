@@ -47,7 +47,6 @@ const Search = ({ notifHandler, player, playerHandler }) => {
       if (data?.status === '200') {
         notifHandler({ type: 'ADD_SONG' });
         data.key = uuidv4();
-        console.log(data.queue);
         data.index = player.queue.length;
         if (player.queue.length === 0) {
           playerHandler({ type: 'INIT', payload: data });
@@ -61,7 +60,7 @@ const Search = ({ notifHandler, player, playerHandler }) => {
   }, [data]);
 
   return (
-    <>
+    <div className='search-container'>
       <form className='query' onSubmit={SendLink}>
         <input
           className='input-search'
@@ -72,9 +71,9 @@ const Search = ({ notifHandler, player, playerHandler }) => {
           value={link}
           onChange={(e) => setLink(e.target.value)}
         />
-        <Button content='search' />
+        <Button content='search' customClass='btn-search' />
       </form>
-    </>
+    </div>
   );
 };
 
