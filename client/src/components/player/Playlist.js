@@ -26,7 +26,7 @@ const Playlist = ({ queue, current, playerHandler }) => {
       <h1 className='playlist-title'>Your Queue</h1>
       <div className='songList'>
         {queue.length === 0 ? (
-          <p>Queue is empty</p>
+          <h3>Queue is empty</h3>
         ) : (
           <TransitionGroup>{getQueue()}</TransitionGroup>
         )}

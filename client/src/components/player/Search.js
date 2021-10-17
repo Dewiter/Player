@@ -11,8 +11,6 @@ const Search = ({ notifHandler, player, playerHandler }) => {
 
     const btn = e.target.childNodes[1];
     const input = e.target.childNodes[0];
-    btn.classList.remove('btn-not-pressed');
-    btn.classList.add('btn-pressed');
     btn.disabled = true;
     input.disabled = true;
 
@@ -32,8 +30,6 @@ const Search = ({ notifHandler, player, playerHandler }) => {
         })
         .catch((err) => console.error(err));
 
-      btn.classList.remove('btn-pressed');
-      btn.classList.add('btn-not-pressed');
       btn.disabled = false;
       input.disabled = false;
       setLink('');

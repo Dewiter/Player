@@ -2,6 +2,8 @@ import React, { useReducer } from 'react';
 import Player from './components/player/Player';
 import Search from './components/player/Search';
 import Playlist from './components/player/Playlist';
+import Profil from './nav/Profil';
+import Navigation from './nav/Navigation';
 
 import { notifController } from './controller/notifController';
 import { playerController } from './controller/playerController';
@@ -30,7 +32,10 @@ function App() {
 
   return (
     <div className='app'>
-      <aside className='nav'></aside>
+      <aside className='nav'>
+        <Profil />
+        <Navigation />
+      </aside>
       <div className='main'>
         <header className='header'>
           <Search

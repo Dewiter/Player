@@ -1,35 +1,37 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
+  /* -webkit-font-smoothing: antialiased; */
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
 }
 
 #root {
-  background: linear-gradient(0deg, #22262b, #1f1323),
-    url('./assets/grey-paper-texture.svg');
-  height: 100vh;
-  backdrop-filter: blur(10px);
+  background: linear-gradient(45deg, #3f1f46, #2b1630);
+
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .app {
-  backdrop-filter: blur(2px);
+  background: rgba(58, 58, 58, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(19px);
+  -webkit-backdrop-filter: blur(19px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
   display: grid;
   grid-column-gap: 0;
 }
 
 .nav {
-  width: 20vw;
+  width: 15vw;
   height: 100vh;
-  /* background-color: blue; */
   grid-column: 1;
+  border-radius: 10px;
 }
 
 .main {
-  width: 80vw;
+  width: 85vw;
   grid-column: 2;
   display: grid;
   grid-row-gap: 0;
@@ -43,7 +45,6 @@ body {
   grid-row: 2;
   height: 90vh;
   color: white;
-  /* background: green; */
 }
 
 .search-container {
@@ -76,8 +77,15 @@ body {
 
 .btn-search {
   background: none;
-  border: 1px #807f87 solid;
+  border: 2px #807f87 solid;
   color: #807f87;
+  height: auto !important;
+}
+
+.btn-search:disabled {
+  background: #807f87;
+
+  color: #1f1323;
 }
 
 .btn-search:hover {
@@ -105,7 +113,7 @@ form .input-search {
   padding-left: 2.5%;
   border: none;
   width: 50vw;
-  border: 1px solid #807f87;
+  border: 2px solid #807f87;
 }
 
 input:-webkit-autofill,
@@ -129,15 +137,14 @@ select:-webkit-autofill:focus {
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(0deg, #22262b, #1f1323),
-    url('./assets/grey-paper-texture.svg');
-  z-index: 1000;
+  background: linear-gradient(45deg, #3f1f46, #2b1630);
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 25px 25px 0 0;
+  z-index: 1000;
   display: grid;
   align-items: center;
   padding-left: 2%;
   padding-right: 2%;
-  box-shadow: 0px 5px 11px 4px #807f87;
 }
 
 .current-song-container {
@@ -152,19 +159,23 @@ select:-webkit-autofill:focus {
   color: white;
   text-align: center;
   width: 100%;
-  animation: scroll-left 10s;
+  animation: scroll-left 20s infinite;
 }
 
 @keyframes scroll-left {
   0% {
     opacity: 0;
-    transform: translateX(300px);
+    transform: translateX(100%);
   }
   5% {
     opacity: 100%;
   }
+  95% {
+    opacity: 100%;
+  }
   100% {
-    transform: translateX(-850px);
+    opacity: 0;
+    transform: translateX(-110%);
   }
 }
 
@@ -270,6 +281,21 @@ select:focus {
   scrollbar-width: none; /* Firefox */
   height: 70vh;
 }
+.songList h3 {
+  text-align: center;
+  margin-top: 10vw;
+  color: #807f87;
+  transition: opacity 1s ease-in-out;
+  animation: slideUp 1s;
+}
+@keyframes slideUp {
+  0% {
+    opacity: 0%;
+  }
+  100% {
+    opacity: 100%;
+  }
+}
 
 .songList :-webkit-scrollbar {
   display: none;
@@ -281,17 +307,10 @@ select:focus {
 
 .playlist-title {
   transition: opacity 1s;
-  animation: slideUp 1s;
   padding-left: 2%;
-}
-
-@keyframes slideUp {
-  0% {
-    opacity: 0%;
-  }
-  100% {
-    opacity: 100%;
-  }
+  font-family: Montserrat;
+  font-weight: bold;
+  font-size: 4rem;
 }
 
 .song {
@@ -309,9 +328,15 @@ select:focus {
   appearance: none;
   -webkit-appearance: none;
   outline: none;
-  border: none;
   color: white;
   background: none;
+  border: none;
+  margin-top: 10px;
+  font-family: 'Montserrat';
+  font-size: 20px;
+}
+.song:hover {
+  background: rgb(31, 19, 35, 0.5);
 }
 .song-active {
   background: rgb(31, 19, 35, 0.5);
@@ -349,4 +374,36 @@ select:focus {
 }
 .fail {
   background: rgba(237, 40, 57, 0.5);
+}
+
+.profil-pic {
+  margin-top: 5%;
+  text-align: center;
+}
+
+.profil-pic img {
+  height: 60px;
+  width: 60px;
+  border-radius: 100px;
+}
+
+.navigation {
+  color: white;
+  list-style-type: none;
+  padding-top: 60%;
+}
+.link {
+  margin-bottom: 30px;
+}
+.navigation li svg {
+  background: none;
+  margin-left: 140px;
+}
+
+.link-active {
+  border-right: 3px solid white;
+}
+
+.link-active svg {
+  filter: drop-shadow(0px 0px 4px #ffffff);
 }

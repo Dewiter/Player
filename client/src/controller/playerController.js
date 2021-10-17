@@ -49,6 +49,7 @@ export const playerController = (state, action) => {
       return {
         ...state,
         currentSong: state.queue[0],
+        isPlaying: false,
       };
     }
   };
@@ -69,17 +70,19 @@ export const playerController = (state, action) => {
       return {
         ...state,
         currentSong: state.queue[state.currentSong.index - 1],
+        isPlaying: false,
       };
     }
   };
 
   const changeSong = () => {
-    state.audio.pause();
     state.audio.currentTime = 0;
+    state.audio.pause();
     state.audio.play();
     return {
       ...state,
       currentSong: action.payload,
+      isPlaying: false,
     };
   };
 
