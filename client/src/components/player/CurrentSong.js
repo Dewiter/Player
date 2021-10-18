@@ -14,7 +14,7 @@ const CurrentSong = ({ name }) => {
   }, [, currentName]);
   return (
     <div className='current-song-container'>
-      <h3 className='current-song'>{currentName}</h3>
+      <marquee className='current-song'>{currentName}</marquee>
     </div>
   );
 };

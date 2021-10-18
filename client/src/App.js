@@ -50,7 +50,9 @@ function App() {
           playerHandler={dispatchPlayer}
         />
       </div>
-      <Player player={player} playerHandler={dispatchPlayer} />
+      {player.queue.length && (
+        <Player player={player} playerHandler={dispatchPlayer} />
+      )}
 
       {notif.notifState && (
         <Notification

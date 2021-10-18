@@ -8,7 +8,8 @@ const Progress = ({ player, playerHandler }) => {
     const total = progressBar.length;
     if (player.audio.currentTime === 0) {
       progressRef.current.childNodes.forEach((bars) => {
-        bars.style.fill = ' white';
+        bars.style.fill = '#232730';
+        bars.style.filter = 'none';
       });
     }
 
@@ -17,13 +18,14 @@ const Progress = ({ player, playerHandler }) => {
     if (progressBar[bar]) {
       const tmp = progressBar.slice(0, bar);
       tmp.forEach((element) => {
-        element.style.fill = 'green';
+        element.style.fill = '#b3679b';
+        element.style.filter = 'drop-shadow(0px 0px 10px #836fee)';
       });
     }
     if (player.audio.currentTime >= player.audio.duration) {
-      progressRef.current.childNodes.forEach((bars) => {
-        bars.style.fill = ' white';
-      });
+      // progressRef.current.childNodes.forEach((bars) => {
+      //   bars.style.fill = ' white';
+      // });
       playerHandler({ type: 'NEXT' });
     }
   });

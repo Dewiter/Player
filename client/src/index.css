@@ -139,6 +139,21 @@ select:-webkit-autofill:focus {
   align-items: center;
   padding-left: 2%;
   padding-right: 2%;
+  transition: transform 1s ease, opacity 1s ease;
+  animation: slidePlayer 1s;
+  border-radius: 50px 50px 0 0;
+  margin: 0 2%;
+}
+
+@keyframes slidePlayer {
+  0% {
+    transform: translateY(50vh);
+    opacity: 0%;
+  }
+  100% {
+    transform: translateY(5vw);
+    opacity: 100%;
+  }
 }
 
 .current-song-container {
@@ -153,24 +168,7 @@ select:-webkit-autofill:focus {
   color: white;
   text-align: center;
   width: 100%;
-  animation: scroll-left 20s infinite;
-}
-
-@keyframes scroll-left {
-  0% {
-    opacity: 0;
-    transform: translateX(100%);
-  }
-  5% {
-    opacity: 100%;
-  }
-  95% {
-    opacity: 100%;
-  }
-  100% {
-    opacity: 0;
-    transform: translateX(-110%);
-  }
+  font-family: 'Montserrat';
 }
 
 .btn-media-container {
@@ -203,7 +201,8 @@ select:-webkit-autofill:focus {
 }
 
 .progress-container svg rect {
-  transition: fill 0.4s ease;
+  transition: fill 0.4s ease, filter 0.4s ease;
+  fill: #232730;
 }
 
 .progress-bg {
@@ -216,7 +215,6 @@ select:-webkit-autofill:focus {
 
 .progress {
   height: 5vh;
-  width: 20vw;
 }
 
 .volume-container {
