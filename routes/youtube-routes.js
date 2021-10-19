@@ -1,61 +1,21 @@
 const express = require('express');
 const router = express.Router();
 const YoutubeModel = require('../models/youtube');
-const YoutubeDl = require('youtube-dl-exec');
-const YoutubeSearch = require('youtube-search');
-const checkLink = require('../middleware/checkLink');
+const query = require('../controller/youtube/query');
 
 const ytsr = require('ytsr');
 
 //write data
-router.get('/query/:url', (req, res) => {
-  //queries youtube api and downloads song
-  YoutubeDl(req.params.url, { dumpSingleJson: true })
-    .then(async (query) => {
-      YoutubeModel.find({ name: query.title }, (err, result) => {
-        if (err) {
-          console.log(err);
-        } else {
-          // - Checks if song is already stored in db -
-          // if not -->  create an entry
-          if (result.length === 0) {
-            const data = new YoutubeModel({
-              name: query.title,
-              data: query.formats[0].url,
-              source: 'youtube',
-            });
-            data.save((err) => {
-              if (err) {
-                console.error(err);
-              } else {
-                console.log(data.id);
-                res.send({
-                  name: data.name,
-                  audio: data.data,
-                  source: data.source,
-                  status: '200',
-                });
-              }
-            });
-            // if so --> retrieve already existing song
-          } else {
-            res.send({
-              name: result[0].name,
-              audio: result[0].data,
-              source: result[0].source,
-              status: '200',
-            });
-          }
-        }
-      })
-        .clone()
-        .catch(function (err) {
-          console.log(err);
-        });
-    })
-    .catch((err) => {
-      res.status(404).send({ status: '404' });
-    });
+router.post('/query/', async (req, res) => {
+  const data = req.body;
+  const check = await query.checkSong(data.sourceID);
+  console.log(' checking check : ', check);
+  if (check.length != 0) {
+    res.send({ data: check, status: 200 });
+  } else {
+    const newSong = query.createSong(data);
+    res.send({ data: newSong, status: 200 });
+  }
 });
 
 router.get('/suggestions/:song', async (req, res) => {
@@ -70,7 +30,7 @@ router.get('/suggestions/:song', async (req, res) => {
         data = [
           ...data,
           {
-            id: result.items[index].id,
+            sourceID: result.items[index].id,
             author: result.items[index].author.name,
             name: result.items[index].title,
             thumbnail: result.items[index].bestThumbnail.url,

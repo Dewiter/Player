@@ -17,17 +17,13 @@ const YoutubeSchema = new Schema(
       type: String,
       required: true,
     },
-    thumbnails: {
+    thumbnail: {
       type: Object,
       require: true,
     },
     source: {
       type: String,
       required: true,
-    },
-    ref_id: {
-      type: String,
-      require: true,
     },
     count: {
       type: Number,

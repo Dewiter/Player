@@ -17,12 +17,9 @@ export const playerController = (state, action) => {
   };
 
   const play = () => {
-    state.audio.src = state.currentSong.audio;
+    state.audio.src = state.currentSong.stream;
     state.audio.currentTime = state.currentTime;
-    state.audio.play().catch((err) => {
-      const url = `http://localhost:5000/${state.currentSong.source}/expired/${state.currentSong.key}`;
-      fetch(url, { headers: { 'Access-Control-Allow-Origin': '*' } });
-    });
+    state.audio.play();
     return { ...state, isPlaying: true };
   };
 
@@ -40,14 +37,14 @@ export const playerController = (state, action) => {
     state.audio.pause();
 
     if (state.currentSong.index + 1 < state.queue.length) {
-      state.audio.src = state.queue[state.currentSong.index + 1].audio;
+      state.audio.src = state.queue[state.currentSong.index + 1].stream;
       state.audio.play();
       return {
         ...state,
         currentSong: state.queue[state.currentSong.index + 1],
       };
     } else {
-      state.audio.src = state.queue[0].audio;
+      state.audio.src = state.queue[0].stream;
       state.audio.play();
       return {
         ...state,
@@ -68,7 +65,7 @@ export const playerController = (state, action) => {
         currentSong: state.queue[0],
       };
     } else {
-      state.audio.src = state.queue[state.currentSong.index - 1].audio;
+      state.audio.src = state.queue[state.currentSong.index - 1].stream;
       state.audio.play();
       return {
         ...state,

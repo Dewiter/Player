@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Button from './Inputs/Button';
 
-const Suggestions = ({ value, submitSuggestion, first }) => {
+const Suggestions = ({ value, setSuggestion, first }) => {
   const [data, setData] = useState([]);
   const getSuggestion = async () => {
     const url = `http://localhost:5000/youtube/suggestions/${value}`;
@@ -37,7 +37,7 @@ const Suggestions = ({ value, submitSuggestion, first }) => {
             <Button
               content='plus-circle'
               customClass='btn-suggestion'
-              onclick={() => submitSuggestion(res)}
+              onClick={setSuggestion(res)}
             />
           </div>
         );

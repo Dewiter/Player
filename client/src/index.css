@@ -46,9 +46,6 @@ body {
   display: flex;
   align-items: center;
   padding-left: 2%;
-}
-
-.query {
   display: inline-block;
   position: relative;
 }

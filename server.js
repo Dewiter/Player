@@ -23,6 +23,7 @@ mongoose.connect(process.env.DATABASE_URL, {
 });
 const db = mongoose.connection;
 
+app.use(express.json());
 app.use('/youtube', YoutubeRoutes);
 
 //db handling error

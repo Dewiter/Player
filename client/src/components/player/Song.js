@@ -18,7 +18,7 @@ const Song = React.memo(({ current, song, playerHandler }) => {
   };
 
   const exerp = () => {
-    if (song.name.length >= 60) {
+    if (song?.name?.length >= 60) {
       return song.name.slice(0, 60);
     }
     return song.name;
