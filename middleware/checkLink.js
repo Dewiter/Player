@@ -1,18 +1,14 @@
 // Check if data already exist
 
-const checkLink = async (model, value) => {
-  const query = await model
-    .find({ name: value }, (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        return result;
-      }
-    })
-    .clone()
-    .catch(function (err) {
-      console.log(err);
-    });
+const checkLink = async (src) => {
+  const a = new Audio(src);
+  try {
+    a.play();
+    a.pause();
+    console.log('good link');
+  } catch (err) {
+    console.error(err);
+  }
 };
 
 module.exports = checkLink;

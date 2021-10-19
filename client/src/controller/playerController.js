@@ -19,7 +19,10 @@ export const playerController = (state, action) => {
   const play = () => {
     state.audio.src = state.currentSong.audio;
     state.audio.currentTime = state.currentTime;
-    state.audio.play();
+    state.audio.play().catch((err) => {
+      const url = `http://localhost:5000/${state.currentSong.source}/expired/${state.currentSong.key}`;
+      fetch(url, { headers: { 'Access-Control-Allow-Origin': '*' } });
+    });
     return { ...state, isPlaying: true };
   };
 

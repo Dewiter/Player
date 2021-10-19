@@ -9,12 +9,40 @@ const YoutubeSchema = new Schema(
       type: String,
       required: true,
     },
-    data: {
+    author: {
       type: String,
       required: true,
     },
+    stream: {
+      type: String,
+      required: true,
+    },
+    thumbnails: {
+      type: Object,
+      require: true,
+    },
     source: {
       type: String,
+      required: true,
+    },
+    ref_id: {
+      type: String,
+      require: true,
+    },
+    count: {
+      type: Number,
+      require: true,
+    },
+    user: {
+      type: String,
+    },
+    date: {
+      type: Date,
+      required: true,
+    },
+    sourceID: {
+      type: String,
+      required: true,
     },
   },
   { collection: 'youtube' }

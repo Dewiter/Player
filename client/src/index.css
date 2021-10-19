@@ -48,25 +48,39 @@ body {
   padding-left: 2%;
 }
 
-.container {
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-  background-color: #353a43;
-  border-radius: 10px;
-  padding: 10px;
-  outline: #3d424b 2px solid;
-}
-
 .query {
-  display: flex;
+  display: inline-block;
+  position: relative;
 }
 
-.query .btn {
-  width: 5%;
-  margin-left: 2%;
+.suggestions {
+  position: absolute;
+  z-index: 99;
+  top: 100%;
+  left: 0;
+  right: 0;
+  color: white;
+  border: 2px solid #807f87;
+  border-top: none;
+  width: 50vw;
+  border-radius: 0 0 25px 25px;
+  padding-left: 2.5%;
+  font-size: 20px;
+  background-color: rgb(31, 29, 30, 0.5);
+  padding-right: 2px;
+  transition: transform 1s, opacity 1s;
+  animation: slideIn 1s;
+}
+.suggestion {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-suggestion {
+  background: none;
+  color: #807f87;
+  border: none;
+  font-size: 1rem;
 }
 
 .btn-search {
@@ -74,6 +88,12 @@ body {
   border: 2px #807f87 solid;
   color: #807f87;
   height: auto !important;
+  width: 5%;
+  margin-left: 2%;
+  position: absolute;
+  left: 110%;
+  top: 0;
+  height: 40px !important;
 }
 
 .btn-search:disabled {
@@ -99,14 +119,21 @@ form .input-search {
   -moz-appearance: none;
   -ms-appearance: none;
   -o-appearance: none;
-  background: none;
+  background: rgb(31, 29, 30, 0.5);
   color: white;
   height: 40px;
-  border-radius: 25px;
   appearance: none;
   padding-left: 2.5%;
-  border: none;
   width: 50vw;
+  border: 2px solid #807f87;
+  font-size: 20px;
+}
+.input-search-active {
+  border-radius: 25px 25px 0 0;
+  border-bottom: none !important;
+}
+.input-search-not-active {
+  border-radius: 25px;
   border: 2px solid #807f87;
 }
 
@@ -202,7 +229,7 @@ select:-webkit-autofill:focus {
 
 .progress-container svg rect {
   transition: fill 0.4s ease, filter 0.4s ease;
-  fill: #232730;
+  fill: #4c5362;
 }
 
 .progress-bg {

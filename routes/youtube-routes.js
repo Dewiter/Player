@@ -2,6 +2,10 @@ const express = require('express');
 const router = express.Router();
 const YoutubeModel = require('../models/youtube');
 const YoutubeDl = require('youtube-dl-exec');
+const YoutubeSearch = require('youtube-search');
+const checkLink = require('../middleware/checkLink');
+
+const ytsr = require('ytsr');
 
 //write data
 router.get('/query/:url', (req, res) => {
@@ -52,6 +56,36 @@ router.get('/query/:url', (req, res) => {
     .catch((err) => {
       res.status(404).send({ status: '404' });
     });
+});
+
+router.get('/suggestions/:song', async (req, res) => {
+  const result = await ytsr(req.params.song, {
+    pages: 1,
+  });
+
+  let data = [];
+  for (let index = 0; index < 5; index++) {
+    if (result.items[index]) {
+      if (result.items[index].type === 'video') {
+        data = [
+          ...data,
+          {
+            id: result.items[index].id,
+            author: result.items[index].author.name,
+            name: result.items[index].title,
+            thumbnail: result.items[index].bestThumbnail.url,
+          },
+        ];
+      }
+    }
+  }
+  res.send(data);
+});
+
+router.get('/expired/song', (req, res) => {
+  YoutubeModel.find({ id: req.params.song }, (err, result) => {
+    console.log(result);
+  });
 });
 
 //Extra routes ment for testing purposes

@@ -6,6 +6,7 @@ import {
   faSearch,
   faForward,
   faBackward,
+  faPlusCircle,
 } from '@fortawesome/free-solid-svg-icons';
 
 const Button = React.forwardRef(({ content, onclick, customClass }, ref) => {
@@ -21,6 +22,8 @@ const Button = React.forwardRef(({ content, onclick, customClass }, ref) => {
         return <FontAwesomeIcon icon={faBackward} />;
       case 'search':
         return <FontAwesomeIcon icon={faSearch} />;
+      case 'plus-circle':
+        return <FontAwesomeIcon icon={faPlusCircle} />;
       default:
         break;
     }

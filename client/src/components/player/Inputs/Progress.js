@@ -8,7 +8,7 @@ const Progress = ({ player, playerHandler }) => {
     const total = progressBar.length;
     if (player.audio.currentTime === 0) {
       progressRef.current.childNodes.forEach((bars) => {
-        bars.style.fill = '#232730';
+        bars.style.fill = '#4c5362';
         bars.style.filter = 'none';
       });
     }

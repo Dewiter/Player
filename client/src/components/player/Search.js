@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Button from './Inputs/Button';
+import Suggestions from './Suggestions';
 const { v4: uuidv4 } = require('uuid');
 
 const Search = ({ notifHandler, player, playerHandler }) => {
   const [link, setLink] = useState('');
   const [data, setData] = useState({});
+  const [sugg, setSugg] = useState(initialState);
 
   const SendLink = async (e) => {
     e.preventDefault();
@@ -55,18 +57,48 @@ const Search = ({ notifHandler, player, playerHandler }) => {
     }
   }, [data]);
 
+  const submitSuggestion = (e, sugg) => {
+    e.prevent.default();
+    console.log(sugg);
+  };
+
+  useEffect(() => {
+    if (link) {
+      document
+        .querySelector('.input-search')
+        .classList.remove('input-search-not-active');
+      document
+        .querySelector('.input-search')
+        .classList.add('input-search-active');
+    } else {
+      document
+        .querySelector('.input-search')
+        .classList.remove('input-search-active');
+      document
+        .querySelector('.input-search')
+        .classList.add('input-search-not-active');
+    }
+  }, [link]);
+
   return (
     <div className='search-container'>
-      <form className='query' onSubmit={SendLink}>
+      <form className='query'>
         <input
-          className='input-search'
+          className='input-search input-search-not-active'
           type='text'
           id='sendLink'
           name='sendLink'
           placeholder='Search'
           value={link}
           onChange={(e) => setLink(e.target.value)}
+          autoComplete='off'
         />
+        {link && (
+          <Suggestions
+            value={link}
+            submitSuggestion={(e) => submitSuggestion(e, sugg)}
+          />
+        )}
         <Button content='search' customClass='btn-search' />
       </form>
     </div>
