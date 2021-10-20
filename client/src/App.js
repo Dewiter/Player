@@ -50,17 +50,17 @@ function App() {
           playerHandler={dispatchPlayer}
         />
       </div>
-      {player.queue.length !== 0 && (
+      {player.queue.length && (
         <Player player={player} playerHandler={dispatchPlayer} />
       )}
 
-      {/* {notif.notifState && (
+      {notif.notifState && (
         <Notification
           notifContent={notif.notifContent}
           notifType={notif.notifType}
           closeNotif={closeNotif}
         />
-      )} */}
+      )}
     </div>
   );
 }

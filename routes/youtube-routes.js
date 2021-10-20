@@ -11,10 +11,12 @@ router.post('/query/', async (req, res) => {
   const check = await query.checkSong(data.sourceID);
   console.log(' checking check : ', check);
   if (check.length != 0) {
-    res.send({ data: check, status: 200 });
+    const send = (({ _id, _v, date, ...newSend }) => newSend)(check);
+    res.send({ data: send, status: 200 });
   } else {
     const newSong = query.createSong(data);
-    res.send({ data: newSong, status: 200 });
+    const send = (({ _id, __v, date, ...newValue }) => newValue)(newSong);
+    res.send({ data: send, status: 200 });
   }
 });
 
