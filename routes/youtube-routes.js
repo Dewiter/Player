@@ -9,17 +9,19 @@ const ytsr = require('ytsr');
 router.post('/query/', async (req, res) => {
   const data = req.body;
   const check = await query.checkSong(data.sourceID);
-  console.log(' checking check : ', check);
   if (check.length != 0) {
-    const send = (({ _id, _v, date, ...newSend }) => newSend)(check);
+    const send = (({ _id, __v, date, ...newValue }) => newValue)(
+      check['0']
+    )._doc;
     res.send({ data: send, status: 200 });
   } else {
-    const newSong = query.createSong(data);
+    const newSong = await query.createSong(data);
     const send = (({ _id, __v, date, ...newValue }) => newValue)(newSong);
     res.send({ data: send, status: 200 });
   }
 });
 
+//Get suggestions
 router.get('/suggestions/:song', async (req, res) => {
   const result = await ytsr(req.params.song, {
     pages: 1,
@@ -44,12 +46,7 @@ router.get('/suggestions/:song', async (req, res) => {
   res.send(data);
 });
 
-router.get('/expired/song', (req, res) => {
-  YoutubeModel.find({ id: req.params.song }, (err, result) => {
-    console.log(result);
-  });
-});
-
+//------------------------------------------------------------------------//
 //Extra routes ment for testing purposes
 //get data
 router.get('/get-content', (req, res) => {

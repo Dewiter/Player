@@ -193,6 +193,7 @@ select:-webkit-autofill:focus {
   text-align: center;
   width: 100%;
   font-family: 'Montserrat';
+  background: none;
 }
 
 .btn-media-container {

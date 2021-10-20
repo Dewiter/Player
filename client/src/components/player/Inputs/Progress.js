@@ -4,29 +4,29 @@ const Progress = ({ player, playerHandler }) => {
   const progressRef = useRef(null);
 
   player.audio.addEventListener('timeupdate', () => {
-    const progressBar = Object.values(progressRef.current?.childNodes);
-    const total = progressBar.length;
-    if (player.audio.currentTime === 0) {
-      progressRef.current.childNodes.forEach((bars) => {
-        bars.style.fill = '#4c5362';
-        bars.style.filter = 'none';
-      });
-    }
+    if (progressRef) {
+      console.log(progressRef?.current?.childNodes);
+      const progressBar = Object.values(progressRef?.current?.childNodes);
+      const total = progressBar.length;
+      if (player.audio.currentTime === 0) {
+        progressRef.current.childNodes.forEach((bars) => {
+          bars.style.fill = '#4c5362';
+          bars.style.filter = 'none';
+        });
+      }
 
-    const percentage = player.audio.currentTime / player.audio.duration;
-    const bar = Math.floor(percentage * total);
-    if (progressBar[bar]) {
-      const tmp = progressBar.slice(0, bar);
-      tmp.forEach((element) => {
-        element.style.fill = '#b3679b';
-        element.style.filter = 'drop-shadow(0px 0px 10px #836fee)';
-      });
-    }
-    if (player.audio.currentTime >= player.audio.duration) {
-      // progressRef.current.childNodes.forEach((bars) => {
-      //   bars.style.fill = ' white';
-      // });
-      playerHandler({ type: 'NEXT' });
+      const percentage = player.audio.currentTime / player.audio.duration;
+      const bar = Math.floor(percentage * total);
+      if (progressBar[bar]) {
+        const tmp = progressBar.slice(0, bar);
+        tmp.forEach((element) => {
+          element.style.fill = '#b3679b';
+          element.style.filter = 'drop-shadow(0px 0px 10px #836fee)';
+        });
+      }
+      if (player.audio.currentTime >= player.audio.duration) {
+        playerHandler({ type: 'NEXT' });
+      }
     }
   });
   return (

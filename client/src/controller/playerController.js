@@ -4,7 +4,7 @@ export const playerController = (state, action) => {
     return {
       ...state,
       currentSong: action.payload,
-      queue: [action.payload],
+      queue: [...state.queue, action.payload],
     };
   };
 

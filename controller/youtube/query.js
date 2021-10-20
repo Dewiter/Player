@@ -14,14 +14,15 @@ const generateStream = async (id) => {
 
 const createSong = async (data) => {
   const stream = await generateStream(data.sourceID);
-  const entry = new YoutubeModel({
+  const entry = {
     ...data,
     source: 'youtube',
     count: 0,
     date: new Date().getTime(),
     stream: stream,
-  });
-  entry.save((err) => {
+  };
+  const response = new YoutubeModel(entry);
+  response.save((err) => {
     if (err) {
       console.log(err);
     }

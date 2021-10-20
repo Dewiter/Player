@@ -50,19 +50,22 @@ const Search = ({ notifHandler, player, playerHandler }) => {
   // ---------------------------------------------------------------------------//
   useEffect(() => {
     if (data.value) {
-      const song = data.value.data[0];
+      const song = data.value.data;
       if (data.value.status === 200) {
         notifHandler({ type: 'ADD_SONG' });
         song.key = uuidv4();
         song.index = player.queue.length;
         if (player.queue.length === 0) {
           playerHandler({ type: 'INIT', payload: song });
+          suggestionState.value = null;
         } else {
+          console.log('upodate');
           playerHandler({ type: 'UPDATE', payload: song });
+          suggestionState.value = null;
         }
       }
     }
-  }, [data]);
+  }, [data.value]);
 
   // ---------------------------------------------------------------------------//
   // Styling for suggestions                                                    //
