@@ -1,32 +1,51 @@
 import React, { useState, useEffect } from 'react';
+import { useFetch } from '../../hooks/useFetch';
 import Button from './Inputs/Button';
-const { v4: uuidv4 } = require('uuid');
+import { useAsyncFn } from 'react-use';
+import { v4 as uuidv4 } from 'uuid';
 
 const Search = ({ notifHandler, player, playerHandler }) => {
   const [link, setLink] = useState('');
-  const [data, setData] = useState({});
-  const [suggestionApi, setSuggestionApi] = useState([]);
-  const [suggestion, setSuggestion] = useState({});
+  const [selectedSuggestion, setSelectedSuggestion] = useState({});
 
-  const SendSong = async (e) => {
+  // ---------------------------------------------------------------------------//
+  // Fetches suggestions triggered by on change from input                      //
+  // ---------------------------------------------------------------------------//
+  const [suggestionState, fetchSuggestions] = useAsyncFn(async (suggestion) => {
+    setLink(suggestion);
+    const url = `${process.env.REACT_APP_BACK_END_PORT}youtube/suggestions/${suggestion}`;
+    if (suggestion) {
+      // const response = await fetch(url, {
+      //   headers: { 'Access-Control-Allow-Origin': '*' },
+      // })
+      //   .then((result) => {
+      //     return result.json();
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //   });
+      return useFetch(url);
+    }
+  });
+
+  // ---------------------------------------------------------------------------//
+  // Fetches song based on either selected or first suggestion                  //
+  // ---------------------------------------------------------------------------//
+  const [data, fetchData] = useAsyncFn(async (e) => {
     e.preventDefault();
-
-    const btn = e.target.childNodes[1];
-    const input = e.target.childNodes[0];
-    btn.disabled = true;
-    input.disabled = true;
-
-    if (suggestionApi.length > 0) {
+    // const btn = e.target.childNodes[1];
+    // const input = e.target.childNodes[0];
+    if (suggestionState.value) {
       let send;
-      if (suggestion) {
-        send = suggestion;
+      if (selectedSuggestion) {
+        send = selectedSuggestion;
       } else {
-        send = suggestionApi[0];
+        send = suggestionState.value[0];
       }
       setLink(send.name);
       const encode = JSON.stringify(send);
-      const url = 'http://localhost:5000/youtube/query/';
-      fetch(url, {
+      const url = `${process.env.REACT_APP_BACK_END_PORT}youtube/query/`;
+      const response = await fetch(url, {
         method: 'POST',
         headers: {
           'Access-Control-Allow-Origin': '*',
@@ -34,60 +53,38 @@ const Search = ({ notifHandler, player, playerHandler }) => {
         },
         body: encode,
       })
-        .then((response) => {
-          return response.json();
-        })
-        .then((res) => {
-          setData(() => {
-            return res;
-          });
-        })
-        .catch((err) => console.error(err));
-      btn.disabled = false;
-      input.disabled = false;
-      setLink('');
-    } else {
-      notifHandler({ type: 'EMPTY_INPUT' });
-    }
-  };
-
-  const getSuggestions = async (e) => {
-    setLink(e.target.value);
-    const url = `http://localhost:5000/youtube/suggestions/${e.target.value}`;
-    if (e.target.value) {
-      const response = await fetch(url, {
-        headers: { 'Access-Control-Allow-Origin': '*' },
-      })
         .then((result) => {
           return result.json();
         })
-        .then((resultParsed) => {
-          return resultParsed;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-      if (response) {
-        setSuggestionApi(response);
-      }
+        .catch((err) => console.error(err));
+      return response;
+    } else {
+      notifHandler({ type: 'EMPTY_INPUT' });
     }
-  };
+  });
 
+  // ---------------------------------------------------------------------------//
+  // Adds song to queue                                                         //
+  // ---------------------------------------------------------------------------//
   useEffect(() => {
-    if (data) {
-      if (data.status === 200) {
-        notifHandler({ type: 'ADD_SONG' });
-        data.key = uuidv4();
-        data.index = player.queue.length;
-        if (player.queue.length === 0) {
-          playerHandler({ type: 'INIT', payload: data.data[0] });
-        } else {
-          playerHandler({ type: 'UPDATE', payload: data.data[0] });
-        }
-      }
+    if (!data.loading) {
+      console.log(data.value);
+      // if (data.value.status === 200) {
+      //   notifHandler({ type: 'ADD_SONG' });
+      //   data.value.key = uuidv4();
+      //   data.value.index = player.queue.length;
+      //   if (player.queue.length === 0) {
+      //     playerHandler({ type: 'INIT', payload: data.value.data[0] });
+      //   } else {
+      //     playerHandler({ type: 'UPDATE', payload: data.value.data[0] });
+      //   }
+      // }
     }
-  }, [data]);
+  }, [data.loading]);
 
+  // ---------------------------------------------------------------------------//
+  // Styling for suggestions                                                    //
+  // ---------------------------------------------------------------------------//
   useEffect(() => {
     if (link) {
       document
@@ -107,13 +104,17 @@ const Search = ({ notifHandler, player, playerHandler }) => {
   }, [link]);
 
   const displayChange = (res) => {
-    setSuggestion(res);
+    setSelectedSuggestion(res);
     setLink(res.name);
   };
 
+  // ---------------------------------------------------------------------------//
+  // Componenent                                                                //
+  // ---------------------------------------------------------------------------//
+
   return (
     <div className='search-container'>
-      <form className='query' onSubmit={(e) => SendSong(e)}>
+      <form className='query' onSubmit={(e) => fetchData(e)}>
         <input
           className='input-search input-search-not-active'
           type='text'
@@ -121,16 +122,22 @@ const Search = ({ notifHandler, player, playerHandler }) => {
           name='sendLink'
           placeholder='Search'
           value={link}
-          onChange={(e) => getSuggestions(e)}
+          onChange={(e) => fetchSuggestions(e.target.value)}
           autoComplete='off'
         />
         <Button content='search' customClass='btn-search' />
       </form>
-      <div className='suggestions'>
-        {link &&
-          suggestionApi.map((res) => {
+      {suggestionState.loading ? (
+        <div className='suggestions'>
+          <div>loading...</div>
+        </div>
+      ) : suggestionState.error ? (
+        <div>Error : {suggestionState.error}</div>
+      ) : (
+        <div className='suggestions'>
+          {suggestionState.value?.map((res) => {
             return (
-              <div className='suggestion'>
+              <div key={uuidv4()} className='suggestion'>
                 <p>{res.name}</p>
                 <Button
                   content='plus-circle'
@@ -140,7 +147,8 @@ const Search = ({ notifHandler, player, playerHandler }) => {
               </div>
             );
           })}
-      </div>
+        </div>
+      )}
     </div>
   );
 };
