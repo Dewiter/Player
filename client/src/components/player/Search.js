@@ -28,10 +28,9 @@ const Search = ({ notifHandler, player, playerHandler }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(suggestionState.value);
-    if (suggestionState.value) {
+    if (suggestionState.value && !suggestionState.loading) {
       let send;
-      if (selectedSuggestion) {
+      if (Object.keys(selectedSuggestion).length !== 0) {
         send = selectedSuggestion;
       } else {
         send = suggestionState.value[0];
