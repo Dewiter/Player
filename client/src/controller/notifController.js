@@ -30,7 +30,7 @@ export const notifController = (state, action) => {
   const stateMachine = [
     { type: 'ADD_SONG', func: addSong },
     { type: 'CLOSE_NOTIF', func: closeNotif },
-    { type: 'EMPTTY_INPUT', func: emptyInput },
+    { type: 'EMPTY_INPUT', func: emptyInput },
     { type: 'BAD_LINK', func: badLink },
   ];
 
