@@ -9,10 +9,7 @@ const Player = ({ player, playerHandler }) => {
       {!player.currentSong.name ? (
         <div className='current-song-container'></div>
       ) : (
-        <CurrentSong
-          name={player.currentSong.name}
-          pp={player.currentSong.thumbnail}
-        />
+        <CurrentSong current={player.currentSong} />
       )}
       <Input player={player} playerHandler={playerHandler} />
       <Progress player={player} playerHandler={playerHandler} />

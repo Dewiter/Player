@@ -4,8 +4,7 @@ const Progress = ({ player, playerHandler }) => {
   const progressRef = useRef(null);
 
   player.audio.addEventListener('timeupdate', () => {
-    if (progressRef) {
-      console.log(progressRef?.current?.childNodes);
+    if (progressRef.current) {
       const progressBar = Object.values(progressRef?.current?.childNodes);
       const total = progressBar.length;
       if (player.audio.currentTime === 0) {

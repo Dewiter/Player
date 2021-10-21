@@ -17,10 +17,22 @@ export const playerController = (state, action) => {
   };
 
   const play = () => {
-    state.audio.src = state.currentSong.stream;
-    state.audio.currentTime = state.currentTime;
-    state.audio.play();
-    return { ...state, isPlaying: true };
+    if (state.queue.length > 0) {
+      state.audio.src = state.currentSong.stream;
+      state.audio.currentTime = state.currentTime;
+      const safeguard =
+        state.audio.currentTime > 0 &&
+        !state.audio.paused &&
+        !state.audio.ended &&
+        state.audio.readyState > state.audio.HAVE_CURRENT_DATA;
+
+      if (!safeguard) {
+        state.audio.play();
+      }
+      return { ...state, isPlaying: true };
+    } else {
+      return state;
+    }
   };
 
   const pause = () => {
@@ -35,13 +47,14 @@ export const playerController = (state, action) => {
   const nextSong = () => {
     state.audio.currentTime = 0;
     state.audio.pause();
-
+    const isPlaying = state.isPlaying ? state.isPlaying : true;
     if (state.currentSong.index + 1 < state.queue.length) {
       state.audio.src = state.queue[state.currentSong.index + 1].stream;
       state.audio.play();
       return {
         ...state,
         currentSong: state.queue[state.currentSong.index + 1],
+        isPlaying: isPlaying,
       };
     } else {
       state.audio.src = state.queue[0].stream;
@@ -49,7 +62,7 @@ export const playerController = (state, action) => {
       return {
         ...state,
         currentSong: state.queue[0],
-        isPlaying: false,
+        isPlaying: isPlaying,
       };
     }
   };
@@ -57,12 +70,14 @@ export const playerController = (state, action) => {
   const prevSong = () => {
     state.audio.currentTime = 0;
     state.audio.pause();
-    if (state.audio.currentTime <= 5 || state.currentSong === 0) {
-      state.audio.src = state.queue[0].audio;
+    const isPlaying = state.isPlaying ? state.isPlaying : true;
+    if (state.audio.currentTime <= 5 || state.currentSong.index === 0) {
+      state.audio.src = state.queue[0].stream;
       state.audio.play();
       return {
         ...state,
         currentSong: state.queue[0],
+        isPlaying: isPlaying,
       };
     } else {
       state.audio.src = state.queue[state.currentSong.index - 1].stream;
@@ -70,19 +85,22 @@ export const playerController = (state, action) => {
       return {
         ...state,
         currentSong: state.queue[state.currentSong.index - 1],
-        isPlaying: false,
+        isPlaying: isPlaying,
       };
     }
   };
 
   const changeSong = () => {
+    console.log();
+    const isPlaying = state.isPlaying ? state.isPlaying : true;
     state.audio.currentTime = 0;
     state.audio.pause();
+    state.audio.src = action.payload.stream;
     state.audio.play();
     return {
       ...state,
       currentSong: action.payload,
-      isPlaying: false,
+      isPlaying: isPlaying,
     };
   };
 

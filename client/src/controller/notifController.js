@@ -2,7 +2,7 @@ export const notifController = (state, action) => {
   const addSong = () => {
     return {
       notifState: true,
-      notifContent: 'Song was added',
+      notifContent: 'Song was added to queue',
       notifType: 'success',
     };
   };
@@ -14,7 +14,7 @@ export const notifController = (state, action) => {
   const emptyInput = () => {
     return {
       notifState: true,
-      notifContent: 'Please enter a link a in the input',
+      notifContent: 'Could not find song',
       notifType: 'fail',
     };
   };

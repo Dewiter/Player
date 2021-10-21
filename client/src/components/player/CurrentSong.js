@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import Marquee from 'react-fast-marquee';
 
-const CurrentSong = ({ name, pp }) => {
+const CurrentSong = ({ current }) => {
   const [currentName, setcurrentName] = useState('');
   useEffect(() => {
-    setcurrentName(name);
-  }, [, currentName]);
+    if (current) {
+      console.log(currentName);
+      setcurrentName(current.name);
+    }
+  }, [current]);
   return (
     <div className='current-song-container'>
       {/* <img src={pp} alt='' /> */}

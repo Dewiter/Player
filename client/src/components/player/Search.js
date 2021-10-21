@@ -57,6 +57,7 @@ const Search = ({ notifHandler, player, playerHandler }) => {
         if (player.queue.length === 0) {
           playerHandler({ type: 'INIT', payload: song });
           suggestionState.value = null;
+          playerHandler({ type: 'PLAY' });
         } else {
           console.log('upodate');
           playerHandler({ type: 'UPDATE', payload: song });

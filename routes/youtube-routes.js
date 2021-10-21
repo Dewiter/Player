@@ -9,10 +9,8 @@ const ytsr = require('ytsr');
 router.post('/query/', async (req, res) => {
   const data = req.body;
   const check = await query.checkSong(data.sourceID);
-  if (check.length != 0) {
-    const send = (({ _id, __v, date, ...newValue }) => newValue)(
-      check['0']
-    )._doc;
+  if (check) {
+    const send = (({ _id, __v, date, ...newValue }) => newValue)(check)._doc;
     res.send({ data: send, status: 200 });
   } else {
     const newSong = await query.createSong(data);
