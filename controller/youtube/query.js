@@ -4,7 +4,6 @@ const YoutubeDl = require('youtube-dl-exec');
 const checkSong = async (sourceID) => {
   let data = await YoutubeModel.findOne({ sourceID: sourceID });
   if (data) {
-    console.log('data exists : ', data);
     await YoutubeModel.updateOne(
       { sourceID: sourceID },
       { count: data.count + 1 }
